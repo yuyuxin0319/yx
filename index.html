@@ -1,0 +1,174 @@
+03.08 00:44
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>雨雨欣的专属手机 · 完整微信</title>
+    <!-- 这里放 CSS 样式 -->
+</head>
+<body>
+<div class="iphone">
+    <!-- 第二个手机的输入控件 -->
+    <input type="file" id="file" accept="image/*" style="display:none;">
+    <input type="file" id="galleryFile" accept="image/*" multiple style="display:none;">
+    <!-- ========== 第二个手机的屏幕 ========== -->
+    <!-- 主屏幕 -->
+    <div id="home" class="screen active">
+        <div class="top-area">
+            <div class="avatar" id="avatar"></div>
+            <div class="bg-strip" id="clock">00:00</div>
+        </div>
+        <div class="mixed-layout">
+            <div class="layout-col">
+                <div class="apps-2x2">
+                    <div class="app-icon-small" onclick="openWxApp()">
+                        <div class="icon-box-small" style="background:#07c160;color:#fff;"></div>
+                        <span class="icon-label-small">微信</span>
+                    </div>
+                    <div class="app-icon-small" onclick="openApp('gallery-screen')">
+                        <div class="icon-box-small" style="background:#ffcc00;color:#fff;">️</div>
+                        <span class="icon-label-small">相册</span>
+                    </div>
+                    <div class="app-icon-small">
+                        <div class="icon-box-small" style="color:#ff3b30;"></div>
+                        <span class="icon-label-small">日历</span>
+                    </div>
+                    <div class="app-icon-small">
+                        <div class="icon-box-small" style="color:#4cd964;">⛅</div>
+                        <span class="icon-label-small">天气</span>
+                    </div>
+                </div>
+                <div class="widget-wrapper">
+                    <div class="widget-box" id="widget-music"><div style="width:100%;height:100%;background:#333;display:flex;justify-content:center;align-items:center;color:#fff;font-size:40px;"></div></div>
+                    <span class="widget-label">网易云音乐</span>
+                </div>
+            </div>
+            <div class="layout-col">
+                <div class="widget-wrapper" onclick="openFirstPhoto()">
+                    <div class="widget-box" id="widget-gallery"><div style="width:100%;height:100%;background:#fecfef;display:flex;justify-content:center;align-items:center;color:#fff;font-size:40px;">️</div></div>
+                    <span class="widget-label">相册精选</span>
+                </div>
+                <div class="apps-2x2">
+                    <div class="app-icon-small" onclick="openApp('beautify-screen')">
+                        <div class="icon-box-small" style="background:linear-gradient(135deg,#ff69b4,#ff1493);color:#fff;">✨</div>
+                        <span class="icon-label-small">美化</span>
+                    </div>
+                    <div class="app-icon-small">
+                        <div class="icon-box-small" style="background:linear-gradient(135deg,#ffd700,#ffb90f);color:#fff;"></div>
+                        <span class="icon-label-small">纪念日</span>
+                    </div>
+                    <div class="app-icon-small">
+                        <div class="icon-box-small" style="background:linear-gradient(135deg,#4cd964,#34c759);color:#fff;"></div>
+                        <span class="icon-label-small">钱包</span>
+                    </div>
+                    <div class="app-icon-small" onclick="openApp('settings-screen')">
+                        <div class="icon-box-small" style="background:linear-gradient(135deg,#8e8e93,#d1d1d6);color:#fff;">⚙️</div>
+                        <span class="icon-label-small">设置</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dock">
+            <div class="dock-icon" style="background:#34c759;color:#fff;"></div>
+            <div class="dock-icon" style="background:#007aff;color:#fff;"></div>
+            <div class="dock-icon" style="background:#ff9500;color:#fff;"></div>
+        </div>
+    </div>
+    <!-- 相册列表 -->
+    <div id="gallery-screen" class="screen hidden">
+        <div class="app-header"><div class="back-btn" onclick="goHome()">返回</div><div class="app-title">宝宝的相册</div></div>
+        <div class="gallery-toolbar">
+            <button class="btn-blue" onclick="toggleSelect()">多选</button>
+            <div><button class="btn-red" onclick="delSelect()" style="display:none">删除</button><button class="btn-green" onclick="shareSelect()" style="display:none">分享</button></div>
+        </div>
+        <div style="padding:15px;text-align:center;"><button style="border:none;background:#007aff;color:#fff;padding:12px 24px;border-radius:20px;font-weight:bold;" onclick="galleryFile.click()">+ 添加照片</button></div>
+        <div class="photo-grid" id="photoGrid"></div>
+    </div>
+    <!-- 照片详情页 -->
+    <div id="photo-detail" class="hidden">
+        <div class="photo-detail">
+            <div class="detail-head">
+                <div class="detail-back" onclick="closeDetail()">← 返回</div>
+                <div class="detail-select" onclick="toggleSelect()">选择</div>
+            </div>
+            <div class="detail-time" id="showTime"></div>
+            <div class="detail-img"><img id="showImg"></div>
+            <div class="detail-bar">
+                <div class="detail-btn" onclick="shareDetail()">分享</div>
+                <div class="detail-btn" onclick="removeDetail()">↩️移出</div>
+                <div class="detail-btn" onclick="delDetail()">删除</div>
+                <div class="detail-btn" onclick="setWallpaper()">️壁纸</div>
+            </div>
+        </div>
+    </div>
+    <!-- 美化 -->
+    <div id="beautify-screen" class="screen hidden">
+        <div class="app-header"><div class="back-btn" onclick="goHome()">返回</div><div class="app-title">美化中心</div></div>
+        <div class="content">
+            <button class="btn" onclick="setTarget('wallpaper')">更换壁纸</button>
+            <button class="btn" onclick="setTarget('avatar')">更换头像</button>
+            <button class="btn" onclick="setTarget('clock')">更换时间条</button>
+            <button class="btn" onclick="setTarget('widget-music')">更换网易云音乐</button>
+            <button class="btn" onclick="setTarget('widget-gallery')">更换相册精选</button>
+        </div>
+    </div>
+    <!-- 手机系统设置 -->
+    <div id="settings-screen" class="screen hidden">
+        <div class="app-header"><div class="back-btn" onclick="goHome()">返回</div><div class="app-title">手机设置</div></div>
+        <div class="content">
+            <p style="text-align:center; color:#999;">这里可以换壁纸、头像等（美化功能）</p>
+        </div>
+    </div>
+    <!-- ========== 微信应用容器 ========== -->
+    <div id="wx-app">
+        <!-- 1. 账号选择页 -->
+        <div id="wx-login-screen" class="screen active" style="display:flex; flex-direction:column;">
+            <div class="wx-header"><div></div><div>选择登录账号</div><div></div></div>
+            <div class="wx-body" id="wx-userList"></div>
+            <div style="padding:20px"><button class="btn-primary" onclick="wxShowEditor('user')">+ 创建新身份</button></div>
+        </div>
+        <!-- 2. 消息列表 -->
+        <div id="wx-main-screen" class="screen" style="display:none; flex-direction:column;">
+            <div class="wx-header"><div></div><div>微信</div><div onclick="wxShowEditor('bot')" style="font-size:24px">+</div></div>
+            <div class="wx-body" id="wx-botList"></div>
+            <div class="wx-footer">
+                <div class="nav-item active" onclick="wxSwitchTab('main')"><span style="font-size:20px"></span><span>微信</span></div>
+                <div class="nav-item" onclick="wxSwitchTab('settings')"><span style="font-size:20px"></span><span>设置</span></div>
+            </div>
+        </div>
+        <!-- 3. 聊天页 -->
+        <div id="wx-chat-screen" class="screen" style="display:none; flex-direction:column;">
+            <div class="wx-header"><div onclick="wxShowScreen('wx-main-screen')">〈 返回</div><div id="wx-chatTitle"></div><div onclick="wxEditCurrentBot()">⚙️</div></div>
+            <div class="chat-box" id="wx-chatBox"></div>
+            <div class="input-bar">
+                <input id="wx-msgInput" placeholder="发消息..." onkeypress="if(event.key=='Enter')wxDoSend()">
+                <button class="send-btn" onclick="wxDoSend()">发送</button>
+            </div>
+        </div>
+        <!-- 4. API设置页 -->
+        <div id="wx-settings-screen" class="screen" style="display:none; flex-direction:column;">
+            <div class="wx-header"><div onclick="wxShowScreen('wx-main-screen')">〈 返回</div><div>系统设置</div><div></div></div>
+            <div class="config-panel">
+                <label>API URL:</label><input id="wx-apiUrl" placeholder="https://api.openai.com/v1">
+                <label>API Key:</label><input id="wx-apiKey" type="password" placeholder="sk-...">
+                <label>Model:</label><input id="wx-apiModel" placeholder="gpt-3.5-turbo">
+                <button class="btn-primary" onclick="wxSaveConfig()">保存配置</button>
+                <button class="btn-primary" style="background:#fa5151; margin-top:20px" onclick="wxLogout()">退出当前账号</button>
+            </div>
+        </div>
+        <!-- 5. 人设编辑器 -->
+        <div id="wx-editor-screen" class="screen" style="display:none; background:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+            <div class="config-panel" style="width:85%">
+                <h3 id="wx-editorTitle">编辑人设</h3>
+                <input id="wx-editName" placeholder="名字 (如: 雨雨欣)">
+                <textarea id="wx-editPrompt" rows="5" placeholder="人设描述 (如: 你是一个温柔的男孩子...)"></textarea>
+                <button class="btn-primary" onclick="wxSaveEditor()">保存</button>
+                <button class="btn-primary" style="background:#eee; color:#333" onclick="wxCloseEditor()">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 这里放 JavaScript 脚本 -->
+</body>
+</html>
